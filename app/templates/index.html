@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{ conf.BOT_NAME }}</title>
+    <link rel="stylesheet" href="static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/css/site.css">
+    <link rel="stylesheet" href="theme.css">
+    <script src="static/js/bootstrap.min.js"></script>
+    <script src="static/js/showdown.min.js"></script>
+    <script src="assistant.js"></script>
+</head>
+<body>
+  
+  <div id="signin-form" class="d-flex align-items-center justify-content-center" style="height: 100%">
+    <div class="form-signin w-100 align-middle">
+        <form onsubmit="signIn(event)">
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="username-input" placeholder="Jack">
+                <label for="floatingInput">Please tell me your name</label>
+            </div>
+          <button class="w-100 btn  btn-primary" type="submit">Start talking to {{ conf.BOT_NAME }}</button>
+        </form>
+    </div>
+   </div>
+  
+
+    <div class="container-fluid h-100 d-none" id="chat-form">
+        <div class="chat-body h-100">
+            <div class="card-body h-100">
+                <div id="messages" class="overflow-auto">
+                    <div><p></p></div>
+                </div>
+                <form action="" class="form-inline" id="chat-form" onsubmit="sendMessage(event)">
+                    <div class="controls-box">
+                        <div class="row" >
+                        <div class="col-sm-12">
+                            <div class="input-group dyna-padding" style="padding-right: 0">
+                                <input type="text" class="form-control" placeholder="{{ res.PROMPT }}" aria-label="{{ res.PROMPT }}" id="messageText">
+                                <button title="Retry" id="retry" type="button" class="btn btn-primary" disabled onclick="sendRetry()"><img class="white-svg" style="width:20px" src="/static/img/rotate-right-solid.svg"></button>
+                                <button title="Send" id="send" type="submit" class="btn btn-primary" disabled>{{ res.BUTTON_WAIT }}</button>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

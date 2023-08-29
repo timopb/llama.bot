@@ -1,0 +1,6 @@
+# local data
+env.sh
+app/static/img/**/
+app/configuration/*
+!app/configuration/default.py
+models/*

@@ -1,0 +1,49 @@
+body {
+    background-image: url('/static/img/{{ conf.BACKGROUND }}');
+}
+
+.client-message {
+    color: {{ conf.USER_FG }};
+    background-color: {{ conf.USER_BG }};
+}
+
+.server-message {
+    color: {{ conf.BOT_FG }};
+    background-color: {{ conf.BOT_BG }};
+}
+
+.info-message {
+    color: {{ conf.INFO_FG }};
+    background-color: {{ conf.INFO_BG }};
+}
+
+.client-message-sender {
+    color: {{ conf.USER_FG }};
+    background-color: {{ conf.USER_BG }};
+}
+
+.server-message-sender {
+    color: {{ conf.BOT_FG }};
+    background-color: {{ conf.BOT_BG }};
+}
+
+code {
+    color: {{ conf.BOT_EM }};
+}
+
+em {
+    font-style: normal;
+    color: {{ conf.EMPHASISE }};
+}
+
+/* pick from various styles:
+ 「 」 〈 〉 《 》 【 】 〔 〕 ⦗ ⦘ 
+ 『 』 〖 〗 〘 〙 ｢ ｣ 〚 〛
+  ❬ ❭ ❮ ❯ ❰ ❱ ❲ ❳
+ */
+em::before {
+    content: '｢'
+}
+em::after {
+    content: '｣'
+}

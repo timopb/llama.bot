@@ -1,0 +1,5 @@
+PROMPT = "Type in your message"
+BUTTON_PROCESSING = "Thinking"
+BUTTON_TYPING = "Typing"
+BUTTON_SEND = "Send"
+BUTTON_WAIT = "Wait"

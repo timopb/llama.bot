@@ -1,18 +1,52 @@
 # llama.bot
 
-A simple implementation of a chatbot UI for LLAMA / ALPACCA and other models. 
+A simple implementation of a chatbot UI for [llama.cpp](https://github.com/ggerganov/llama.cpp) compatible models in GGUF format. 
 
-![anna](https://github.com/timopb/llama.bot/assets/3785547/4b99fd1d-f22b-4fe1-83d2-a3e69acc1790)
-(Sample implementation. Background and bot personality not included in repository)
+![mel](https://github.com/timopb/llama.bot/assets/3785547/7b64dae0-b5fb-4315-bbaa-aa3a93bf489b)
+Sample implementation, background image and Mel's personality are not included in repository. Background image created with [Midjourney](https://www.midjourney.com/) by [BrokenTeapotStudios](https://www.deviantart.com/watch/brokenteapotstudios/deviations)
 
-# Running your own bot
-1. Download a large language model of your choice. Look for GGUF Models from [The Bloke](https://huggingface.co/TheBloke) on Huggingface or convert your own one by downloading a pytorch model and using `convert.py` and `quantize` from the [ggerganov/llama.cpp](https://github.com/ggerganov/llama.cpp) github repository. 
+# Setting up your own bot
+1. Download a large language model of your choice. Look for GGUF Models from [The Bloke](https://huggingface.co/TheBloke) on Huggingface or convert your own one by downloading a pytorch model and using `convert.py` and `quantize` from the [ggerganov/llama.cpp](https://github.com/ggerganov/llama.cpp) github repository. The sample shown above uses [llama2-7b-chat](https://github.com/facebookresearch/llama) by META. 
 2. Modify the configuation/default.py to fit your needs or create your own configuration file. Make sure to use the proper PROMPT generator for your model.
 3. Setup your environment variables (see below)
-4. Make sure prerequisites are installed: `pip install -r requirements.txt`. I recommend using something like venv or miniconda to setup a dedicated environment for the bot as the packages are quite large (~1.5 GB) and you probably don't want them polluting your system site-packages folder forever.
+4. Make sure all required prerequisites are installed: `pip install -r requirements.txt`. I recommend using something like [venv](https://docs.python.org/3/library/venv.html) or [miniconda](https://docs.conda.io/en/latest/miniconda.html) for setting up a dedicated bot environment to avoid polluting your system site-packages folder.
 4. Go to the app folder and run `make start`
 
-**Note:** To use GGML models you need to downgrade the llama-cpp-python to version 0.1.78 and checkout llama.cpp at commitish [dadbed9](https://github.com/ggerganov/llama.cpp/commit/dadbed99e65252d79f81101a392d0d6497b86caa).
+## Using Models in GGMLv3 format
+⚠️ **As of 9/21/23 the GGML file format is no longer supported by llama.cpp. If you get an `invalid magic number` error message during bootup of the bot you are using a model in an unsupported file format.**
+
+To use GGMLv3 models you need to downgrade the llama-cpp-python to version 0.1.78:
+```sh
+pip3 uninstall -y llama-cpp-python && pip3 install llama-cpp-python==0.1.78 
+```
+
+Checkout llama.cpp at commitish [dadbed9](https://github.com/ggerganov/llama.cpp/commit/dadbed99e65252d79f81101a392d0d6497b86caa) for the apropriate convert and quantize tools.
+
+## GPU offloading for increased performance
+If you have a NVIDIA GTX, RTX or Tensor Core GPU you should enable CUDA support to offload layers of your language model to the GPU for a considerable performance boost.
+
+To enable hardware accelleration you need to (re-)install the llama-cpp-python package with CUBLAS support compiled into it.
+
+Download and instull CUDA Toolkit from NVIDIA. Modify the paths of compiler and toolkit root according to the version you have installed and run the command:
+```sh
+pip3 uninstall -y llama-cpp-python && CMAKE_ARGS="-DTCNN_CUDA_ARCHITECTURES=86 -DLLAMA_CUBLAS=1 -DCMAKE_CUDA_COMPILER=/usr/local/cuda-12.2/bin/nvcc -DCUDAToolkit_ROOT=/usr/local/cuda-12.2" FORCE_CMAKE=1 pip3 install -v llama-cpp-python --no-cache-dir
+```
+
+CMAKE will tell you if it found the CUDA Toolkit at the spcified location. If you were successfull your bot will log messagaes similar like this at boot:
+<pre>
+ggml_init_cublas: found 1 CUDA devices:
+  Device 0: NVIDIA GeForce GTX 1660 Ti with Max-Q Design, compute capability 7.5
+
+...
+
+llm_load_tensors: using CUDA for GPU acceleration
+llm_load_tensors: mem required  =  172.96 MB (+ 2048.00 MB per state)
+llm_load_tensors: offloading 32 repeating layers to GPU
+llm_load_tensors: offloaded 32/35 layers to GPU
+llm_load_tensors: VRAM used: 3719 MB
+</pre>
+
+Make sure to use an apropriate value for the `GPU_LAYERS` setting in your bot configuration file. Otherwise you will overload the GPU memory, which will result in a signficant increase in load times on each request.
 
 # Environment variables
  Name         | Purpose
@@ -33,24 +67,3 @@ As I am to lazy to build a sophisticated UI some options can only be accessed by
 !bots               |	List available configurations. Click a configuration to load it. Due to RAM constraints changing the model will apply for all current connections
 !bot                |	Show name of currently loaded configuration
 !bot (filename)	    | Load a different configuration
-
-# Enable CUDA Support to speed up token generation
-To enable cuda support you need to install the llama-cpp-python package CUBLAS support and apropriate settings.
-
-Download and instull CUDA Toolkit from NVIDIA. Modify the paths of compiler and toolkit root according to the version you have installed and run the command:
-```sh
-pip3 uninstall -y llama-cpp-python && CMAKE_ARGS="-DTCNN_CUDA_ARCHITECTURES=86 -DLLAMA_CUBLAS=1 -DCMAKE_CUDA_COMPILER=/usr/local/cuda-12.2/bin/nvcc -DCUDAToolkit_ROOT=/usr/local/cuda-12.2" FORCE_CMAKE=1 pip3 install -v llama-cpp-python --no-cache-dir
-```
-CMAKE will tell you if it found the CUDA Toolkit at the spcified location. If you were successfull your bot will log messagaes similar like this at boot:
-<pre>
-ggml_init_cublas: found 1 CUDA devices:
-  Device 0: NVIDIA GeForce GTX 1660 Ti with Max-Q Design, compute capability 7.5
-
-...
-
-llm_load_tensors: using CUDA for GPU acceleration
-llm_load_tensors: mem required  =  172.96 MB (+ 2048.00 MB per state)
-llm_load_tensors: offloading 32 repeating layers to GPU
-llm_load_tensors: offloaded 32/35 layers to GPU
-llm_load_tensors: VRAM used: 3719 MB
-</pre>

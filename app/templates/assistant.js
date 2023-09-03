@@ -60,15 +60,29 @@ function sendRetry(){
     setButtons("{{ res.BUTTON_PROCESSING }}", true, true)
 }
 
+function localCommandHandled(query) {
+    if(query == "!clear")
+    {
+        var messages = document.getElementById('messages');
+        messages.innerHTML = "";
+        return true;
+    }
+    return false;
+}
+
 function submitMessage(){
     if (!ws) return;
+
     dontScroll = false;
+
     var message = document.getElementById('messageText').value;
-    if (message === "") {
-        return;
-    }
-    ws.send(message);
+    if (message === "") return;
     document.getElementById('messageText').value = "";
+ 
+    if (localCommandHandled(message)) return
+
+    ws.send(message);
+
     setButtons("{{ res.BUTTON_PROCESSING }}", true, true)
 }
 

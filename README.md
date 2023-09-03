@@ -49,23 +49,23 @@ llm_load_tensors: VRAM used: 3719 MB
 Make sure to use an apropriate value for the `GPU_LAYERS` setting in your bot configuration file. Otherwise you will overload the GPU memory, which will result in a signficant increase in load times on each request.
 
 # Environment variables
- Name         | Purpose
---------------|---------------------------------------------------------------
-CONFIGURATION | Specifies which configuration file from the configuration folder will be loaded (default.py if not set)
-MODEL_FOLDER  | Path to your LLMs. By default it will use "models" in the root folder of the project
-WS_URL        | external URL for websocket connection. Will be rendered into the HTML/Javascript. Default ws://localhost. Overwrite if running behind a reverse proxy 
+| Name          | Purpose
+|---------------|--------------------------------------------------------------------------------------|
+| CONFIGURATION | Specifies which configuration file from the configuration folder will be loaded (default.py if not set) |
+| MODEL_FOLDER  | Path to your LLMs. By default it will use "models" in the root folder of the project |
+| WS_URL        | external URL for websocket connection. Will be rendered into the HTML/Javascript. Default ws://localhost. Overwrite if running behind a reverse proxy |
 
 # Builtin Chat Commands
-As I am to lazy to build a sophisticated UI some options can only be accessed by chat commands. Authorize with `!auth (password)` before executing any of the other commands.
+As I am to lazy to build a sophisticated UI some options can only be accessed by chat commands. `!reset` and `!clear` can be executed without authorization. Any other command will require you to authorize first using the `!auth` command.
 
- Command            | Purpose
---------------------|---------------------------------------------------------------
-!auth (password)    | Gain Authorization as system operator.
-!models             |	List available models. Click a model to load it. Due to RAM constraints changing the model will apply for all current connections
-!model              |	Show currently loaded model
-!model (filename)	  | Load a different model
-!bots               |	List available configurations. Click a configuration to load it. Due to RAM constraints changing the model will apply for all current connections
-!bot                |	Show name of currently loaded configuration
-!bot (filename)	    | Load a different configuration
-!reset              |	Reset short-term memory. The bot will not remember previously discussed topics
-!clear	            | Clear chat history. This will have no effect on the bot's memory.
+| Command             | Purpose                                                                        |
+|---------------------|--------------------------------------------------------------------------------|
+| !auth (password)    | Gain authorization as system operator. The password can be configured via the `ADMIN_SECRET` property in your configuration file | 
+| !models             |	List available models. Click a model to load it. Due to RAM constraints changing the model will apply for all current connections |
+| !model              |	Show currently loaded model                                                    |
+| !model (filename)	  | Load a different model                                                         |
+| !bots               |	List available configurations. Click a configuration to load it. Due to RAM constraints changing the model will apply for all current connections |
+| !bot                |	Show name of currently loaded configuration                                    |
+| !bot (filename)	    | Load a different configuration                                                 |
+| !reset              |	Reset short-term memory. The bot will not remember previously discussed topics |
+| !clear	            | Clear chat history. This will have no effect on the bot's memory.              |

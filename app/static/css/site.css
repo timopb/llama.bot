@@ -1,11 +1,10 @@
 html, body, body > header { height: 100%; margin: 0; padding: 0; }
 
 .form-signin {
-    box-shadow: 0 0 20px 0px rgba(0,0,0,0.3);
     border-radius: 7px;
     background-color: rgba(7,7,7,0.55);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     max-width: 330px;
     padding: 15px;
 }
@@ -53,7 +52,7 @@ hr {
 }
 
 input[type="text"]:focus, input[type="text"]{
-    background-color: rgba(20,20,20,0.65);
+    background-color: rgba(20,20,20,0.55);
     border: 1px solid #0a53be;
     color: #fff;
 }
@@ -77,6 +76,7 @@ input[type="text"]:focus, input[type="text"]{
 }
 
 .card-body{
+    transition: background-color 1s, backdrop-filter 1s, -webkit-backdrop-filter 1s;
     background-color: rgba(7,7,7,0.55);
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
@@ -145,7 +145,7 @@ input[type="text"]:focus, input[type="text"]{
 
 }
 
-@media screen and (max-width: 576px) {
+@media screen and (max-width: 576px) {    
     .dyna-padding {
         padding-bottom: 1rem;
     }
@@ -153,6 +153,10 @@ input[type="text"]:focus, input[type="text"]{
 
 @media screen and (min-width: 920px) {
     .card-body {
+        transition: background-color 1s, backdrop-filter 1s, -webkit-backdrop-filter 1s;
+        background-color: rgba(7,7,7,0.65);
+        backdrop-filter: blur(9px);
+        -webkit-backdrop-filter: blur(9px);
         border-radius: 7px;
     }
     body {

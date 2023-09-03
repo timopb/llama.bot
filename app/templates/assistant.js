@@ -61,7 +61,7 @@ function sendRetry(){
 }
 
 function localCommandHandled(query) {
-    if(query == "!clear")
+    if(query.toLowerCase() === "!clear")
     {
         var messages = document.getElementById('messages');
         messages.innerHTML = "";

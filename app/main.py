@@ -140,6 +140,7 @@ async def parse_command(websocket, query: str, authorized, chat_history):
                 await send(websocket, "(Re-)loading model: %s" % conf.MODEL, "info")
                 llm = None
                 llm = Llama(model_path=os.path.join(models_folder, conf.MODEL), n_ctx=conf.CONTEXT_TOKENS, n_threads=max_threads, use_mlock=True, n_gpu_layers=conf.GPU_LAYERS)
+                model_name = conf.MODEL
                 await send(websocket, "Configuration changed", "info")
                 await websocket.close()
             except Exception as e:

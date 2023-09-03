@@ -37,4 +37,6 @@ def build_llama2_chat_prompt(conf, query,history,user_name):
         llama2_chat_prompt += query
         llama2_chat_prompt += " [/INST]"
 
+    llama2_chat_prompt = llama2_chat_prompt.replace("###USERNAME###", user_name)
+
     return llama2_chat_prompt

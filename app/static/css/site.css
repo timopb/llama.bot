@@ -191,6 +191,8 @@ input[type="text"]:focus, input[type="text"]{
 }
 
 .client-message {
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
     width:fit-content;
     min-width:200px;
     color: #fff;
@@ -216,6 +218,8 @@ input[type="text"]:focus, input[type="text"]{
 
 
 .server-message {
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
     float:right;
     width:fit-content;
     min-width:200px;
@@ -254,6 +258,8 @@ input[type="text"]:focus, input[type="text"]{
 
 .error-message,
 .info-message {
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
     clear: right;
     border-radius: 6px;
     padding-top: 8px;
@@ -275,6 +281,8 @@ input[type="text"]:focus, input[type="text"]{
 }
 
 .client-message-sender {
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
     clear: right;
     font-weight: bold;
     margin-left:0px;
@@ -289,6 +297,8 @@ input[type="text"]:focus, input[type="text"]{
 }
 
 .server-message-sender {
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
     clear: right;
     width: fit-content;
     max-width: 80%;

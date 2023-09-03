@@ -114,7 +114,6 @@ input[type="text"]:focus, input[type="text"]{
         padding-right: 2px;
         padding-top: 24px;
         padding-bottom: 24px;
-        box-shadow: 0 0 20px 0px rgba(0,0,0,0.3);
     }
 
     .controls-box {

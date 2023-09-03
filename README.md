@@ -67,3 +67,5 @@ As I am to lazy to build a sophisticated UI some options can only be accessed by
 !bots               |	List available configurations. Click a configuration to load it. Due to RAM constraints changing the model will apply for all current connections
 !bot                |	Show name of currently loaded configuration
 !bot (filename)	    | Load a different configuration
+!reset              |	Reset short-term memory. The bot will not remember previously discussed topics
+!clear	            | Clear chat history. This will have no effect on the bot's memory.

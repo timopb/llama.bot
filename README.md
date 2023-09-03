@@ -13,21 +13,21 @@ Sample implementation, background image and Mel's personality are not included i
 4. Go to the app folder and run `make start`
 
 ## Using Models in GGMLv3 format
-⚠️ **As of 9/21/23 the GGML file format is no longer supported by llama.cpp. If you get an `invalid magic number` error message during bootup of the bot you are using a model in an unsupported file format.**
+⚠️ **As of 8/21/23 the GGML file format is no longer supported by llama.cpp. If you get an `invalid magic number` error message during bootup of the bot you are using a model in an unsupported file format.**
 
 To use GGMLv3 models you need to downgrade the llama-cpp-python to version 0.1.78:
 ```sh
 pip3 uninstall -y llama-cpp-python && pip3 install llama-cpp-python==0.1.78 
 ```
 
-Checkout llama.cpp at commitish [dadbed9](https://github.com/ggerganov/llama.cpp/commit/dadbed99e65252d79f81101a392d0d6497b86caa) for the apropriate convert and quantize tools.
+Checkout llama.cpp at commit [dadbed9](https://github.com/ggerganov/llama.cpp/commit/dadbed99e65252d79f81101a392d0d6497b86caa) for the apropriate convert and quantize tools.
 
 ## GPU offloading for increased performance
-If you have a NVIDIA GTX, RTX or Tensor Core GPU you should enable CUDA support to offload layers of your language model to the GPU for a considerable performance boost.
+If you have a NVIDIA GTX, RTX or Tensor Core GPU you can enable CUDA support to offload layers of your language model to the GPU for a considerable performance boost.
 
 To enable hardware accelleration you need to (re-)install the llama-cpp-python package with CUBLAS support compiled into it.
 
-Download and instull CUDA Toolkit from NVIDIA. Modify the paths of compiler and toolkit root according to the version you have installed and run the command:
+Download and instull [CUDA Toolkit from NVIDIA](https://developer.nvidia.com/cuda-downloads). Modify the paths of compiler and toolkit root according to the version you have installed and run the command:
 ```sh
 pip3 uninstall -y llama-cpp-python && CMAKE_ARGS="-DTCNN_CUDA_ARCHITECTURES=86 -DLLAMA_CUBLAS=1 -DCMAKE_CUDA_COMPILER=/usr/local/cuda-12.2/bin/nvcc -DCUDAToolkit_ROOT=/usr/local/cuda-12.2" FORCE_CMAKE=1 pip3 install -v llama-cpp-python --no-cache-dir
 ```

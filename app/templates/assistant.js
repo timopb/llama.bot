@@ -92,7 +92,12 @@ function sendMessage(event) {
 }
 
 function connect() {
-    ws = new WebSocket("{{ wsurl }}/chat/" + encodeURI(username));
+    let wsBaseUrl = "{{ wsurl }}";
+    if (wsBaseUrl === "") {
+        let wsProtocol = "https:" === document.location.protocol ? 'wss://' : 'ws://'
+        wsBaseUrl = wsProtocol + window.location.host;
+    }
+    ws = new WebSocket(wsBaseUrl + "/chat/" + encodeURI(username));
     ws.onmessage = function (event) {
         var messages = document.getElementById('messages');
         var data = JSON.parse(event.data);
@@ -110,7 +115,7 @@ function connect() {
         }
         // Scroll to the bottom of the chat
         if (!dontScroll){
-            messages.scrollTop = messages.scrollHeight;
+            messages.scrollTop = Math.floor(messages.scrollHeight - messages.offsetHeight)
         }
     };
     ws.onopen = function() {

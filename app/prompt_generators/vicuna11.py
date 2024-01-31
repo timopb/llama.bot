@@ -22,16 +22,16 @@ def build_vicuna11_prompt(conf, query,history,user_name):
         conversation += user_name + ": " + cleanup_message(msg[0]) + "\n"
         conversation += conf.BOT_NAME + ": " + cleanup_message(msg[1]) + "\n"
  
-    vicuna11_prompt = conf.SYSTEM_MESSAGE.rstrip() + "\n"
+    prompt = conf.SYSTEM_MESSAGE.rstrip() + "\n"
 
     if not conversation == "":
-        vicuna11_prompt += "You use the following conversation as context to create a response to ###USERNAME###'s input:\n"
-        vicuna11_prompt += conversation +"\n"
+        prompt += "You use the following conversation as context to create a response to ###USERNAME###'s input:\n"
+        prompt += conversation
     else:
-        vicuna11_prompt += "\n"
+        prompt += "\n"
 
-    vicuna11_prompt += user_name + ":\n" + query + "\n\n" 
-    vicuna11_prompt += conf.BOT_NAME + ":\n"     
-    vicuna11_prompt = vicuna11_prompt.replace("###USERNAME###", user_name)
+    prompt += user_name + ": " + query + "\n" 
+    prompt += conf.BOT_NAME + ":\n"     
+    prompt = prompt.replace("###USERNAME###", user_name)
 
-    return vicuna11_prompt
+    return prompt

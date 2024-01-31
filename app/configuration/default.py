@@ -8,12 +8,12 @@ WELCOME = "Welcome to the LLaMa Chat Bot"
 
 # Pick which model you want to use. Currently only models in GGUF format are supported.
 # To use GGMLv3 models you need to downgrade the llama-cpp-python package to version 0.1.78
-MODEL = "WizardLM/WizardLM-7B-V1.0-Uncensored.gguf.q4_k_m.bin"
-# MODEL = "nous-hermes/nous-hermes-llama2-7b.gguf.q4_k_m.bin"
+# MODEL = "WizardLM/WizardLM-13B-V1.0-Uncensored.gguf.qq_k_m.bin"
+MODEL = "nous-hermes/nous-hermes-llama2-13b.gguf.q5_k_m.bin"
 
 # Pick which kind of prompt is being used pick one apropriate for the model you are using
 # Supported values are VICUNA11_CHAT, INSTRUCT_CHAT and LLAMA2_CHAT
-PROMPT_TYPE = "VICUNA11_CHAT"
+PROMPT_TYPE = "VICUNA11"
 
 # Prevents the Bot from generating whole conversations in a single run. 
 # Use ###USERNAME### as substitution for the name entered by the user 

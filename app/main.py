@@ -15,6 +15,7 @@ from schemas import ChatResponse
 from prompt_generators.llama2_chat import build_llama2_chat_prompt
 from prompt_generators.vicuna11_chat import build_vicuna11_prompt
 from prompt_generators.instruct_chat import build_instruct_prompt
+from prompt_generators.chatml import build_chatml_prompt
 
 # Port to bind to
 DEFAULT_PORT=8123
@@ -63,7 +64,7 @@ async def get(request: Request):
 async def get(request: Request):
     return templates.TemplateResponse("assistant.js", {
         "request": request, 
-        "wsurl": os.getenv("WSURL") if os.getenv("WSURL") != None else "ws://localhost:%s" % DEFAULT_PORT, 
+        "wsurl": os.getenv("WSURL", ""),
         "res": res,
         "conf": conf
     },
@@ -93,6 +94,8 @@ def build_prompt(query, history, user_name):
             prompt = build_vicuna11_prompt(conf, query, history, user_name)
         case "INSTRUCT_CHAT":
             prompt = build_instruct_prompt(conf, query, history, user_name)
+        case "CHATML":
+            prompt = build_chatml_prompt(conf, query, history, user_name)
 
     tokens = llm.tokenize( bytes(prompt, 'utf-8'))
     logging.info("Request token count: %d" % len(tokens))

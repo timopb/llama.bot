@@ -12,9 +12,9 @@ from fastapi.responses import FileResponse
 from fastapi.templating import Jinja2Templates
 from llama_cpp import Llama
 from schemas import ChatResponse
-from prompt_generators.llama2_chat import build_llama2_chat_prompt
-from prompt_generators.vicuna11_chat import build_vicuna11_prompt
-from prompt_generators.instruct_chat import build_instruct_prompt
+from prompt_generators.instruct import build_instruct_prompt
+from prompt_generators.vicuna11 import build_vicuna11_prompt
+from prompt_generators.alpaca import build_alpaca_prompt
 from prompt_generators.chatml import build_chatml_prompt
 
 # Port to bind to
@@ -79,7 +79,6 @@ async def get(request: Request):
     },
     media_type="text/css")
 
-
 def build_stopwords(user_name):
     stop_words = conf.STOP_WORDS
     stop_words = [word.replace('###USERNAME###',user_name) for word in stop_words]
@@ -88,12 +87,12 @@ def build_stopwords(user_name):
 def build_prompt(query, history, user_name):
     prompt = ""
     match conf.PROMPT_TYPE:
-        case "LLAMA2_CHAT":
-            prompt = build_llama2_chat_prompt(conf, query, history, user_name)
-        case "VICUNA11_CHAT":
-            prompt = build_vicuna11_prompt(conf, query, history, user_name)
-        case "INSTRUCT_CHAT":
+        case "INSTRUCT":
             prompt = build_instruct_prompt(conf, query, history, user_name)
+        case "VICUNA11":
+            prompt = build_vicuna11_prompt(conf, query, history, user_name)
+        case "ALPACA":
+            prompt = build_alpaca_prompt(conf, query, history, user_name)
         case "CHATML":
             prompt = build_chatml_prompt(conf, query, history, user_name)
 

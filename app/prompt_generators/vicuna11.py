@@ -1,6 +1,6 @@
 from .prompt_helper import cleanup_message
 
-def build_vicuna11_prompt(conf, query,history,user_name):
+def build_prompt(conf, query,history,user_name):
     """
     Example prompt:
 

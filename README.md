@@ -144,3 +144,4 @@ BOTNAME:
 | [PygmalionAI/mythalion-13b](https://huggingface.co/PygmalionAI/mythalion-13b) | Metharme & Alpaca |
 | [meta-llama/Llama-2-13b](https://huggingface.co/meta-llama/Llama-2-13b) | Alpaca (With system message in instruct section) |
 | [meta-llama/Llama-2-13b-chat](https://huggingface.co/meta-llama/Llama-2-13b-chat) | LLaMa2 Instruct |
+| [sethuiyer/Dr_Samantha-7b](https://huggingface.co/sethuiyer/Dr_Samantha-7b) | Alpaca |

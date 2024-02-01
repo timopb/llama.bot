@@ -69,3 +69,79 @@ As I am to lazy to build a sophisticated UI some options can only be accessed by
 | !bot (filename)	    | Load a different configuration                                                 |
 | !reset              |	Reset short-term memory. The bot will not remember previously discussed topics |
 | !clear	            | Clear chat history. This will have no effect on the bot's memory.              |
+
+# Supported Prompt Types
+
+## LLaMa2 Instruct Prompt ("INSTRUCT")
+```
+[INST] 
+<<SYS>>
+(System Message) 
+<</SYS>>
+Hi Bot![/INST]
+Hello User!
+[INST] How much is the fish? [/INST]
+```
+
+## Alpaca Style Prompt ("ALPACA")
+```
+### Instruction:
+You are a helpful chat bot
+
+Use the following conversation as context:
+USERNAME: Hi Bot!
+BOTNAME: Hello User!
+
+### Input: How much is the fish? 
+
+### Response:
+```
+
+## ChatML Style Prompt ("CHATML")
+```
+<|im_start|>system
+Assistant is a large language model trained by OpenAI.
+<|im_end|>
+<|im_start|>user
+Who were the founders of Microsoft?
+<|im_end|>
+<|im_start|>assistant
+```
+
+## Pygmalion/Metharme Style Prompt ("METHARME")
+```
+<|system|>Enter RP mode. Pretend to be {{char}} whose persona follows:
+{{persona}}
+
+You shall reply to the user while staying in character, and generate long responses.
+<|user|>Hello!<|model|>Hi there
+<|user|>How much is the fish?<|model|>
+```
+
+## Vicuna 1.1 Style Prompt ("VICUNA11")
+```
+{{ System Message }}
+
+You use the following conversation as context to create a response to USERNAME's input:
+USERNAME: Hi Bot!
+BOTNAME: Hello User!
+
+USERNAME:
+How much is the fish?
+
+BOTNAME:
+```
+
+### Tested and confirmed working LLMs
+
+| Model  | Prompt-Type  |
+|---|---|
+| [cognitivecomputations/WizardLM-1.0-Uncensored-Llama2-13b](https://huggingface.co/cognitivecomputations/WizardLM-1.0-Uncensored-Llama2-13b) | Vicuna 1.1 |
+| [cognitivecomputations/samantha-mistral-7b](https://huggingface.co/cognitivecomputations/samantha-mistral-7b) | ChatML |
+| [tiiuae/falcon-7b-instruct](https://huggingface.co/tiiuae/falcon-7b-instruct)  | Vicuna 1.1 |
+|  [NousResearch/Nous-Hermes-Llama2-13b](https://huggingface.co/NousResearch/Nous-Hermes-Llama2-13b) | Alpaca |
+| [senseable/WestLake-7B-v2](https://huggingface.co/senseable/WestLake-7B-v2) | ChatML |
+| [PygmalionAI/mythalion-13b](https://huggingface.co/PygmalionAI/mythalion-13b) | Metharme & Alpaca |
+| [meta-llama/Llama-2-13b](https://huggingface.co/meta-llama/Llama-2-13b) | Alpaca (With system message in instruct section) |
+| [meta-llama/Llama-2-13b-chat](https://huggingface.co/meta-llama/Llama-2-13b-chat) | LLaMa2 Instruct |
+| [sethuiyer/Dr_Samantha-7b](https://huggingface.co/sethuiyer/Dr_Samantha-7b) | Alpaca |

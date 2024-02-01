@@ -214,7 +214,8 @@ async def websocket_endpoint(websocket: WebSocket, user_name: str):
     authorized = False
     
     if conf.WELCOME:
-        await send(websocket, conf.WELCOME, "info")
+        welcome = conf.WELCOME.replace('###USERNAME###', user_name)
+        await send(websocket, welcome, "info")
 
     chat_history = []
 

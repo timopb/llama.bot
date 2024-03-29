@@ -18,8 +18,8 @@ MODEL = "NousResearch/nous-hermes-llama2-13b.gguf.q5_k_m.bin"
 # Supported values are VICUNA11, INSTRUCT, ALPACA, METHARME and CHATML
 PROMPT_TYPE = "VICUNA11"
 
-# Prevents the Bot from generating whole conversations in a single run. 
-# Use ###USERNAME### as substitution for the name entered by the user 
+# Prevents the Bot from generating whole conversations in a single run.
+# Use ###USERNAME### as substitution for the name entered by the user
 STOP_WORDS = ['<|user|>', '<|im_start|>', '<|im_end|>', '### Input:', '###BOTNAME###:', '###USERNAME###:']
 
 # Give your bot some personality
@@ -43,14 +43,14 @@ TEMPERATURE=0.7
 TOP_P=0.7
 TOP_K=0
 REPETATION_PENALTY=1.1
-CONTEXT_TOKENS = 4096 
+CONTEXT_TOKENS = 4096
 MAX_RESPONSE_TOKENS = 1024
 
 # The PROMPT is assembled from SYSTEM_MESSAGE + CONVERSATION_HISTORY + the User's INPUT.
 # HISTORY_COUNT defines how many past Queries and Responses are used to assemble the CONVERSATION_HISTORY.
 # Make sure to not exceed your model's supported context size when setting these values.
-# Adjust these values thoroughly when working with large system messages or talkative Models. 
-HISTORY_COUNT = 3 
+# Adjust these values thoroughly when working with large system messages or talkative Models.
+HISTORY_COUNT = 3
 
 # For a GTX 1660TI with 6GB RAM use 32 for 7B, or 16 for 13B Models
-GPU_LAYERS=32
+GPU_LAYERS=41

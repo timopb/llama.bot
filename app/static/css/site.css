@@ -1,8 +1,14 @@
-html, body, body > header { height: 100%; margin: 0; padding: 0; }
+html,
+body,
+body > header {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
 
 .form-signin {
     border-radius: 7px;
-    background-color: rgba(7,7,7,0.55);
+    background-color: rgba(7, 7, 7, 0.55);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     max-width: 330px;
@@ -20,7 +26,6 @@ html, body, body > header { height: 100%; margin: 0; padding: 0; }
     z-index: 2;
 }
 
-
 input:focus + label {
     color: #c0c0c0;
 }
@@ -34,12 +39,13 @@ input + label {
     background-color: #a82222;
 }
 
-a, a:visited {
+a,
+a:visited {
     color: white;
 }
 
 body {
-    background-color:rgb(99, 111, 117);
+    background-color: rgb(99, 111, 117);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -51,16 +57,17 @@ hr {
     margin-top: 20px;
 }
 
-input[type="text"]:focus, input[type="text"]{
-    background-color: rgba(20,20,20,0.55);
+input[type="text"]:focus,
+input[type="text"] {
+    background-color: rgba(20, 20, 20, 0.55);
     border: 1px solid #0a53be;
     color: #fff;
 }
 
 #messages {
-    padding-left:0px;
-    padding-right:10px;
-    min-height: 150px; 
+    padding-left: 0px;
+    padding-right: 10px;
+    min-height: 150px;
     height: calc(100% - 70px);
     scroll-behavior: smooth;
 }
@@ -75,9 +82,12 @@ input[type="text"]:focus, input[type="text"]{
     opacity: 0.6;
 }
 
-.card-body{
-    transition: background-color 1s, backdrop-filter 1s, -webkit-backdrop-filter 1s;
-    background-color: rgba(7,7,7,0.55);
+.card-body {
+    transition:
+        background-color 1s,
+        backdrop-filter 1s,
+        -webkit-backdrop-filter 1s;
+    background-color: rgba(7, 7, 7, 0.55);
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
     padding-left: 15px;
@@ -90,7 +100,6 @@ input[type="text"]:focus, input[type="text"]{
 }
 
 @media screen and (min-width: 576px) {
-
     .client-message-sender {
         margin-left: 10px !important;
     }
@@ -113,7 +122,7 @@ input[type="text"]:focus, input[type="text"]{
         padding-left: 2px;
         padding-right: 2px;
         padding-top: 24px;
-        padding-bottom: 24px;
+        padding-bottom: 35px;
     }
 
     .controls-box {
@@ -124,14 +133,14 @@ input[type="text"]:focus, input[type="text"]{
     }
 
     .chat-body {
-        min-height: 400px; 
-        height: 100%; 
+        min-height: 400px;
+        height: 100%;
         margin: 0 auto !important;
     }
 
     #messages {
-        padding-left:20px;
-        padding-right:20px;
+        padding-left: 20px;
+        padding-right: 20px;
         height: calc(100% - 60px);
     }
 
@@ -139,12 +148,15 @@ input[type="text"]:focus, input[type="text"]{
     #chat-form {
         margin-top: 1rem !important;
         padding-right: 0px !important;
-    } 
-    */  
-
+    }
+    */
 }
 
-@media screen and (max-width: 576px) {    
+html {
+    font-size: 1.3em;
+}
+
+@media screen and (max-width: 576px) {
     .dyna-padding {
         padding-bottom: 1rem;
     }
@@ -152,26 +164,32 @@ input[type="text"]:focus, input[type="text"]{
 
 @media screen and (min-width: 920px) {
     .card-body {
-        transition: background-color 1s, backdrop-filter 1s, -webkit-backdrop-filter 1s;
-        background-color: rgba(7,7,7,0.65);
+        transition:
+            background-color 1s,
+            backdrop-filter 1s,
+            -webkit-backdrop-filter 1s;
+        background-color: rgba(7, 7, 7, 0.65);
         backdrop-filter: blur(9px);
         -webkit-backdrop-filter: blur(9px);
         border-radius: 7px;
     }
     body {
         padding-top: 15px;
-        padding-bottom:15px;
+        padding-bottom: 15px;
     }
-
 }
 
 @media screen and (min-width: 940px) {
-    
     body {
         padding-top: 60px;
-        padding-bottom:60px;
+        padding-bottom: 60px;
     }
-
+    html {
+        font-size: 1em;
+    }
+    .card-body {
+        padding-bottom: 24px;
+    }
 }
 
 .controls-box {
@@ -184,16 +202,16 @@ input[type="text"]:focus, input[type="text"]{
 
 .chat-body {
     max-width: 900px;
-    min-height: 400px; 
-    height: 100%; 
+    min-height: 400px;
+    height: 100%;
     margin: 0 auto;
 }
 
 .client-message {
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
-    width:fit-content;
-    min-width:200px;
+    width: fit-content;
+    min-width: 200px;
     color: #fff;
     background-color: #2e3757a0;
     padding-top: 15px;
@@ -208,23 +226,22 @@ input[type="text"]:focus, input[type="text"]{
 }
 
 .client-message:not(:last-child) {
-    margin-bottom: 40px
+    margin-bottom: 40px;
 }
 
 .client-message:last-child {
-    margin-bottom: 15px
+    margin-bottom: 15px;
 }
-
 
 .server-message {
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
-    float:right;
-    width:fit-content;
-    min-width:200px;
+    float: right;
+    width: fit-content;
+    min-width: 200px;
     max-width: 80%;
     color: #fff;
-    background-color: #57273Fa0;
+    background-color: #57273fa0;
     border-top-left-radius: 6px;
     border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px;
@@ -270,13 +287,12 @@ input[type="text"]:focus, input[type="text"]{
     margin-bottom: 25px;
 }
 
-
 .server-message:not(:last-child) {
-    margin-bottom: 40px
+    margin-bottom: 40px;
 }
 
 .server-message:last-child {
-    margin-bottom: 15px
+    margin-bottom: 15px;
 }
 
 .client-message-sender {
@@ -284,9 +300,9 @@ input[type="text"]:focus, input[type="text"]{
     -webkit-backdrop-filter: blur(4px);
     clear: right;
     font-weight: bold;
-    margin-left:0px;
-    width:fit-content;
-    padding-top:1px;
+    margin-left: 0px;
+    width: fit-content;
+    padding-top: 1px;
     padding-left: 15px;
     padding-right: 15px;
     margin-left: 0px;
@@ -303,7 +319,7 @@ input[type="text"]:focus, input[type="text"]{
     max-width: 80%;
     font-weight: bold;
     text-align: right;
-    margin-right: 10px; 
+    margin-right: 10px;
     margin-left: auto;
     padding-top: 1px;
     padding-left: 15px;
@@ -314,29 +330,30 @@ input[type="text"]:focus, input[type="text"]{
 }
 
 .source {
-    margin-top:5px;
+    margin-top: 5px;
     font-size: 0.8em;
 }
 
 .white-svg {
-    filter: invert(100%) sepia(0%) saturate(1%) hue-rotate(156deg) brightness(102%) contrast(101%);
+    filter: invert(100%) sepia(0%) saturate(1%) hue-rotate(156deg)
+        brightness(102%) contrast(101%);
 }
 
 .blink_me {
     animation: blinker 1s linear infinite;
 }
 
-@keyframes blinker {  
-    50% { 
+@keyframes blinker {
+    50% {
         color: #0d6efd;
-     }
+    }
 }
 
 /* custom scrollbar */
 ::-webkit-scrollbar {
     width: 20px;
-  }
-  
+}
+
 ::-webkit-scrollbar-track {
     background-color: transparent;
 }
@@ -355,4 +372,3 @@ input[type="text"]:focus, input[type="text"]{
 pre {
     white-space: pre-wrap;
 }
-  

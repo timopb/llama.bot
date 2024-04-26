@@ -33,12 +33,12 @@ logger.setLevel(logging.INFO)
 models_folder = os.getenv("MODELS_FOLDER") if os.getenv("MODELS_FOLDER") != None else "../models"
 max_threads = multiprocessing.cpu_count() - 1
 
-def load_config(config_module: str = None):
+def load_config(config_module: str | None = None):
     global conf
     if config_module == None:
         config_module = os.getenv("CONFIGURATION") if os.getenv("CONFIGURATION") != None else "default"
-    logger.info("Configuration: %s " % config_module)
-    conf = import_module("configuration." + config_module)
+    logger.info(f"Configuration: {config_module}")
+    conf = import_module(f"configuration.{config_module}")
 
 @app.on_event("startup")
 async def startup_event():
@@ -73,10 +73,11 @@ async def get(request: Request):
 
 @app.get("/theme.css")
 async def get(request: Request):
-    conf.BACKGROUND = random.choice(conf.BACKGROUNDS)
+    random_background = random.choice(conf.BACKGROUNDS)
     return templates.TemplateResponse("theme.css", {
         "request": request,
-        "conf": conf
+        "conf": conf,
+        "random_background": random_background
     },
     media_type="text/css")
 

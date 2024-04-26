@@ -4,3 +4,4 @@ app/static/img/**/
 app/configuration/*
 !app/configuration/default.py
 models/*
+.pyrightconfig.json

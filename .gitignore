@@ -1,7 +1,9 @@
 # local data
+start.sh
 env.sh
 app/static/img/**/
 app/configuration/*
 !app/configuration/default.py
 models/*
-.pyrightconfig.json
+pyrightconfig.json
+.idea

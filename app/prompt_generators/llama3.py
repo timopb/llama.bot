@@ -44,6 +44,5 @@ def build_llama3_prompt(conf, query,history,user_name):
 
 
     prompt = prompt.replace("###USERNAME###", user_name)
-    print(prompt)
 
     return prompt

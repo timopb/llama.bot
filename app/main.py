@@ -17,6 +17,7 @@ from prompt_generators.vicuna11 import build_vicuna11_prompt
 from prompt_generators.alpaca import build_alpaca_prompt
 from prompt_generators.chatml import build_chatml_prompt
 from prompt_generators.metharme import build_metharme_prompt
+from prompt_generators.llama3 import build_llama3_prompt
 
 # Port to bind to
 DEFAULT_PORT=8123
@@ -100,6 +101,8 @@ def build_prompt(query, history, user_name):
             prompt = build_chatml_prompt(conf, query, history, user_name)
         case "METHARME":
             prompt = build_metharme_prompt(conf, query, history, user_name)
+        case "LLAMA3":
+            prompt = build_llama3_prompt(conf, query, history, user_name)
 
     tokens = llm.tokenize( bytes(prompt, 'utf-8'))
     logging.info("Request token count: %d" % len(tokens))

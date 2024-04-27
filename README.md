@@ -72,6 +72,23 @@ As I am to lazy to build a sophisticated UI some options can only be accessed by
 
 # Supported Prompt Types
 
+## LLaMa3  Prompt
+```
+<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+{{ system_prompt }}<|eot_id|>
+<|start_header_id|>user<|end_header_id|>
+
+{{ user_message_1 }}<|eot_id|>
+<|start_header_id|>assistant<|end_header_id|>
+
+{{ model_answer_1 }}<|eot_id|>
+<|start_header_id|>user<|end_header_id|>
+
+{{ user_message_2 }}<|eot_id|>
+<|start_header_id|>assistant<|end_header_id|>
+```
+
 ## LLaMa2 Instruct Prompt ("INSTRUCT")
 ```
 [INST] 

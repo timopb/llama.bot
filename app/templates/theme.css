@@ -1,5 +1,5 @@
 body {
-    background-image: url('/static/img/{{ conf.BACKGROUND }}');
+    background-image: url('/static/img/{{ random_background }}');
 }
 
 .client-message {

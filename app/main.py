@@ -17,6 +17,7 @@ from prompt_generators.vicuna11 import build_vicuna11_prompt
 from prompt_generators.alpaca import build_alpaca_prompt
 from prompt_generators.chatml import build_chatml_prompt
 from prompt_generators.metharme import build_metharme_prompt
+from prompt_generators.llama3 import build_llama3_prompt
 
 # Port to bind to
 DEFAULT_PORT=8123
@@ -33,12 +34,12 @@ logger.setLevel(logging.INFO)
 models_folder = os.getenv("MODELS_FOLDER") if os.getenv("MODELS_FOLDER") != None else "../models"
 max_threads = multiprocessing.cpu_count() - 1
 
-def load_config(config_module: str = None):
+def load_config(config_module: str | None = None):
     global conf
     if config_module == None:
         config_module = os.getenv("CONFIGURATION") if os.getenv("CONFIGURATION") != None else "default"
-    logger.info("Configuration: %s " % config_module)
-    conf = import_module("configuration." + config_module)
+    logger.info(f"Configuration: {config_module}")
+    conf = import_module(f"configuration.{config_module}")
 
 @app.on_event("startup")
 async def startup_event():
@@ -56,7 +57,7 @@ async def favicon():
 @app.get("/")
 async def get(request: Request):
     return templates.TemplateResponse("index.html", {
-        "request": request, 
+        "request": request,
         "res": res,
         "conf": conf
     })
@@ -64,7 +65,7 @@ async def get(request: Request):
 @app.get("/assistant.js")
 async def get(request: Request):
     return templates.TemplateResponse("assistant.js", {
-        "request": request, 
+        "request": request,
         "wsurl": os.getenv("WSURL", ""),
         "res": res,
         "conf": conf
@@ -73,10 +74,11 @@ async def get(request: Request):
 
 @app.get("/theme.css")
 async def get(request: Request):
-    conf.BACKGROUND = random.choice(conf.BACKGROUNDS)
+    random_background = random.choice(conf.BACKGROUNDS)
     return templates.TemplateResponse("theme.css", {
-        "request": request, 
-        "conf": conf
+        "request": request,
+        "conf": conf,
+        "random_background": random_background
     },
     media_type="text/css")
 
@@ -99,10 +101,12 @@ def build_prompt(query, history, user_name):
             prompt = build_chatml_prompt(conf, query, history, user_name)
         case "METHARME":
             prompt = build_metharme_prompt(conf, query, history, user_name)
+        case "LLAMA3":
+            prompt = build_llama3_prompt(conf, query, history, user_name)
 
     tokens = llm.tokenize( bytes(prompt, 'utf-8'))
     logging.info("Request token count: %d" % len(tokens))
-    logging.info("Prompt: %s" % prompt)
+    logging.info("Prompt: \x1b[1;33m%s\x1b[0m" % prompt)
     return prompt
 
 async def send(ws, msg: str, type: str):
@@ -122,7 +126,7 @@ async def parse_command(websocket, query: str, authorized, chat_history):
     if query.lower() == "!auth":
         await send(websocket, "Usage: !auth (password or passphrase)", "info")
         return (True, authorized, chat_history)
-    
+
     if query.lower().startswith("!auth "):
         auth_args=query.strip().split(" ")
         if len(auth_args) > 1 and " ".join(auth_args[1:]) == conf.ADMIN_SECRET:
@@ -188,7 +192,7 @@ async def parse_command(websocket, query: str, authorized, chat_history):
             await send(websocket, "Usage: !model path/to/model.bin", "info")
         return (True, authorized, chat_history)
 
-    if query.strip().lower() == "!model": 
+    if query.strip().lower() == "!model":
         await send(websocket, "Current model: %s" % model_name, "info")
         return (True, authorized, chat_history)
 
@@ -209,12 +213,13 @@ async def parse_command(websocket, query: str, authorized, chat_history):
 @app.websocket("/chat/{user_name}")
 async def websocket_endpoint(websocket: WebSocket, user_name: str):
     await websocket.accept()
-    
+
     # track authorization on a per second scope
     authorized = False
-    
+
     if conf.WELCOME:
-        await send(websocket, conf.WELCOME, "info")
+        welcome = conf.WELCOME.replace('###USERNAME###', user_name)
+        await send(websocket, welcome, "info")
 
     chat_history = []
 
@@ -225,7 +230,7 @@ async def websocket_endpoint(websocket: WebSocket, user_name: str):
 
             # Receive and send back the client message
             question = await websocket.receive_text()
-            
+
             # skip chat if query was identified as server side command
             (command_executed, authorized, chat_history) = await parse_command(websocket, question, authorized, chat_history)
             if command_executed == True: continue
@@ -241,24 +246,24 @@ async def websocket_endpoint(websocket: WebSocket, user_name: str):
                 start_type="start"
 
             stop_words = build_stopwords(user_name)
-            logger.info("Stop Words: %s" % stop_words)
+            logger.info("Stop Words: \x1b[31;1m%s\x1b[0m" % stop_words)
 
-            for i in llm(build_prompt(question, chat_history, user_name), 
-                         stop=stop_words, 
-                         echo=False, 
-                         stream=True, 
-                         temperature=conf.TEMPERATURE, 
-                         top_k=conf.TOP_K, 
-                         top_p=conf.TOP_P, 
-                         repeat_penalty=conf.REPETATION_PENALTY, 
+            for i in llm(build_prompt(question, chat_history, user_name),
+                         stop=stop_words,
+                         echo=False,
+                         stream=True,
+                         temperature=conf.TEMPERATURE,
+                         top_k=conf.TOP_K,
+                         top_p=conf.TOP_P,
+                         repeat_penalty=conf.REPETATION_PENALTY,
                          max_tokens=conf.MAX_RESPONSE_TOKENS):
                 response_text = i.get("choices", [])[0].get("text", "")
                 if response_text != "":
                     answer_type = start_type if response_complete == "" else "stream"
                     response_complete += response_text
                     await send(websocket, response_text, answer_type)
-            
-            logging.info("Response: %s" % response_complete)
+
+            logging.info("Response: \x1b[36m%s\x1b[0m" % response_complete)
             chat_history.append((question, response_complete))
             await send(websocket, "", "end")
 
@@ -273,11 +278,11 @@ async def websocket_endpoint(websocket: WebSocket, user_name: str):
 
 if __name__ == "__main__":
     """
-    Consider running the bot via uvicorn for hot reload on configuration 
+    Consider running the bot via uvicorn for hot reload on configuration
     changes or to specify alternate port and host settings. Example:
 
-    uvicorn main:app --reload --host 0.0.0.0 --port 8123    
-    
+    uvicorn main:app --reload --host 0.0.0.0 --port 8123
+
     """
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=DEFAULT_PORT)
